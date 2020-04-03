@@ -1,5 +1,4 @@
 const state = {
-  selectedMovieIsLoading: false,
   movieResultsAreLoading: false,
   selectedMovie: {
     tconst: "tt0082971",

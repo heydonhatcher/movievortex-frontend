@@ -1,6 +1,10 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
-import { newMovieSelected } from "../actions";
+import {
+  newMovieSelected,
+  movieQueryStarted,
+  movieQueryFinished
+} from "../actions";
 
 const selectedMovie = createReducer(
   {},
@@ -9,7 +13,14 @@ const selectedMovie = createReducer(
   }
 );
 const movieResults = (state = []) => state;
+
+const movieResultsAreLoading = createReducer(false, {
+  [movieQueryStarted]: () => true,
+  [movieQueryFinished]: () => false
+});
+
 export default combineReducers({
   selectedMovie,
-  movieResults
+  movieResults,
+  movieResultsAreLoading
 });
