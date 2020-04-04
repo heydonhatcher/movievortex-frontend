@@ -3,7 +3,8 @@ import { combineReducers } from "redux";
 import {
   newMovieSelected,
   movieQueryStarted,
-  movieQueryFinished
+  movieQueryFinished,
+  movieResultsReceived
 } from "../actions";
 
 const selectedMovie = createReducer(
@@ -12,7 +13,9 @@ const selectedMovie = createReducer(
     [newMovieSelected]: (state, action) => action.payload
   }
 );
-const movieResults = (state = []) => state;
+const movieResults = createReducer([], {
+  [movieResultsReceived]: (state, action) => action.payload
+});
 
 const movieResultsAreLoading = createReducer(false, {
   [movieQueryStarted]: () => true,
