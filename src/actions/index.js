@@ -5,6 +5,7 @@ export const newMovieSelected = createAction("newMovieSelected");
 export const movieResultsReceived = createAction("movieResultsReceived");
 export const movieQueryStarted = createAction("movieQueryStarted");
 export const movieQueryFinished = createAction("movieQueryFinished");
+export const movieTitleInputChanged = createAction("movieTitleInputChanged");
 export const movieResultClicked = movie => dispatch => {
   dispatch(newMovieSelected(movie));
   dispatch(movieQueryStarted());
@@ -33,6 +34,21 @@ export const movieResultClicked = movie => dispatch => {
       "Content-Type": "application/json"
     },
     mode: "cors"
+  })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      dispatch(movieQueryFinished());
+      dispatch(movieResultsReceived(data));
+    });
+};
+
+export const movieTitleSearchStarted = title => dispatch => {
+  dispatch(movieQueryStarted());
+  let url = API_URL + "/movies/find?title=" + title;
+  fetch(url, {
+    method: "GET"
   })
     .then(response => {
       return response.json();

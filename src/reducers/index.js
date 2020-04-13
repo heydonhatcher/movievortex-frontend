@@ -4,7 +4,8 @@ import {
   newMovieSelected,
   movieQueryStarted,
   movieQueryFinished,
-  movieResultsReceived
+  movieResultsReceived,
+  movieTitleInputChanged
 } from "../actions";
 
 const selectedMovie = createReducer(
@@ -22,8 +23,13 @@ const movieResultsAreLoading = createReducer(false, {
   [movieQueryFinished]: () => false
 });
 
+const movieTitleSearchValue = createReducer("", {
+  [movieTitleInputChanged]: (state, action) => action.payload
+});
+
 export default combineReducers({
   selectedMovie,
   movieResults,
-  movieResultsAreLoading
+  movieResultsAreLoading,
+  movieTitleSearchValue
 });

@@ -7,7 +7,7 @@ export const personPropType = PropTypes.shape({
 
 export const moviePropType = PropTypes.shape({
   tconst: PropTypes.string.isRequired,
-  titles: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
   directors: PropTypes.arrayOf(personPropType).isRequired,
   writers: PropTypes.arrayOf(personPropType).isRequired,
