@@ -4,7 +4,8 @@ import MovieVortex from "../components/MovieVortex";
 
 const mapStateToProps = state => ({
   selectedMovie: Object.keys(state.selectedMovie).length !== 0,
-  movieResultsAreLoading: state.movieResultsAreLoading
+  movieResultsAreLoading: state.movieResultsAreLoading,
+  error: state.error
 });
 
 export default connect(mapStateToProps)(MovieVortex);
