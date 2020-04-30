@@ -2,7 +2,8 @@ import { createReducer } from "@reduxjs/toolkit";
 import {
   backendConnectionError,
   backendError,
-  jsonResponseError
+  jsonResponseError,
+  unknownError
 } from "../actions";
 
 export default createReducer(null, {
@@ -14,5 +15,8 @@ export default createReducer(null, {
   },
   [jsonResponseError]: (state, action) => {
     return "The backend did not return a valid response: " + action.payload;
+  },
+  [unknownError]: (state, action) => {
+    return "An unknown error has occurred: " + action.payload;
   }
 });

@@ -1,6 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import error from "./error";
+import user from "./user";
 import {
   newMovieSelected,
   movieQueryStarted,
@@ -33,5 +34,6 @@ export default combineReducers({
   movieResults,
   movieResultsAreLoading,
   movieTitleSearchValue,
-  error
+  error,
+  user
 });

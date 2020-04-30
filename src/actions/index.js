@@ -1,7 +1,14 @@
 import { createAction } from "@reduxjs/toolkit";
 import { API_URL } from "../constants";
+import {
+  ERROR_BACKEND_CONNECTION,
+  ERROR_BACKEND_RESPONSE,
+  ERROR_JSON
+} from "../constants/errors";
 
 // pure action creators
+export const loginSuccess = createAction("loginSuccess");
+export const loginFailure = createAction("loginFailure");
 export const newMovieSelected = createAction("newMovieSelected");
 export const movieResultsReceived = createAction("movieResultsReceived");
 export const movieQueryStarted = createAction("movieQueryStarted");
@@ -28,29 +35,65 @@ export const jsonResponseError = createAction("jsonResponseError", err => {
     payload: err
   };
 });
+export const unknownError = createAction("unknownError", err => {
+  return {
+    error: true,
+    payload: err
+  };
+});
 
 // action creator thunks
 const handleBackendResponse = (promise, dispatch) => {
   promise
-    // Hit when we can't reach the backend at all
-    .catch(err => {
-      dispatch(movieQueryFinished());
-      dispatch(backendConnectionError(err));
-    })
-    .then(response => {
-      dispatch(movieQueryFinished());
-      return response.json();
-    })
-    .catch(err => {
-      // Backend got a result, but it's not valid JSON
-      dispatch(jsonResponseError(err));
-    })
+    .then(
+      response => {
+        dispatch(movieQueryFinished());
+        try {
+          return response.json();
+        } catch (err) {
+          // Backend got a result, but it's not valid JSON
+          throw {
+            type: ERROR_JSON,
+            err: err
+          };
+        }
+      },
+      // Hit when we can't reach the backend at all
+      err => {
+        throw {
+          type: ERROR_BACKEND_CONNECTION,
+          err: err
+        };
+      }
+    )
     .then(data => {
       if (data.error) {
         // Able to reach the backend but something went wrong
-        dispatch(backendError(data.error));
+        throw {
+          type: ERROR_BACKEND_RESPONSE,
+          err: data.error
+        };
+      } else {
+        // Everything went well! Woo!
+        dispatch(movieResultsReceived(data.data));
       }
-      dispatch(movieResultsReceived(data.data));
+    })
+    .catch(err => {
+      dispatch(movieQueryFinished());
+      switch (err.type) {
+        case ERROR_JSON:
+          dispatch(jsonResponseError(err.err));
+          break;
+        case ERROR_BACKEND_CONNECTION:
+          dispatch(backendConnectionError(err.err));
+          break;
+        case ERROR_BACKEND_RESPONSE:
+          dispatch(backendError(err.err));
+          break;
+        default:
+          dispatch(unknownError(err.err));
+          break;
+      }
     });
 };
 export const movieResultClicked = movie => dispatch => {
