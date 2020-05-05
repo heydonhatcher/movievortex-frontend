@@ -1,8 +1,8 @@
 import React from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import MovieResultsList from "../containers/MovieResultsList";
 import SelectedMovie from "../containers/SelectedMovie";
 import MovieSearchInput from "../containers/MovieSearchInput";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import Error from "./Error";
 import Login from "../containers/Login";
 
@@ -10,7 +10,7 @@ const MovieVortex = ({
   user,
   selectedMovie,
   movieResultsAreLoading,
-  error
+  error,
 }) => {
   if (user === null) {
     return <Login />;
@@ -18,7 +18,7 @@ const MovieVortex = ({
   const movieResults = error ? (
     <Error error={error} />
   ) : movieResultsAreLoading ? (
-    <CircularProgress />
+    <LinearProgress color="secondary" />
   ) : (
     <MovieResultsList />
   );
