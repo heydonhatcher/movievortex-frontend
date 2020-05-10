@@ -3,10 +3,15 @@ import {
   backendConnectionError,
   backendError,
   jsonResponseError,
-  unknownError
+  unknownError,
+  userNotFound,
+  clearErrors,
 } from "../actions";
 
 export default createReducer(null, {
+  [userNotFound]: (state, action) => {
+    return "The specified user does not have access. Please verify that you are an authorized account.";
+  },
   [backendConnectionError]: (state, action) => {
     return "The system could not connect to the backend: " + action.payload;
   },
@@ -18,5 +23,8 @@ export default createReducer(null, {
   },
   [unknownError]: (state, action) => {
     return "An unknown error has occurred: " + action.payload;
-  }
+  },
+  [clearErrors]: (state, action) => {
+    return null;
+  },
 });

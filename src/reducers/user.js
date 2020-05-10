@@ -1,6 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { loginSuccess } from "../actions/index";
+import { userChanged, userNotLoggedIn } from "../actions";
 
 export default createReducer(null, {
-  [loginSuccess]: (state, action) => action.payload
+  [userChanged]: (state, action) => action.payload,
+  [userNotLoggedIn]: (state, action) => null,
 });

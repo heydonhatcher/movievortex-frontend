@@ -1,12 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
+import { userChanged } from "../actions";
 import MovieVortex from "../components/MovieVortex";
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   selectedMovie: Object.keys(state.selectedMovie).length !== 0,
   movieResultsAreLoading: state.movieResultsAreLoading,
   error: state.error,
-  user: state.user
+  user: state.user,
 });
 
-export default connect(mapStateToProps)(MovieVortex);
+const mapDispatchToProps = (dispatch) => ({
+  setUser: (user) => dispatch(userChanged(user)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieVortex);

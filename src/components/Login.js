@@ -3,7 +3,7 @@ import { GoogleLogin } from "react-google-login";
 import Avatar from "@material-ui/core/Avatar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
+import Error from "./Error";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default ({ loginSuccess, loginFailure }) => {
+export default ({ loginSuccess, loginFailure, error }) => {
   const classes = useStyles();
 
   return (
@@ -64,6 +64,7 @@ export default ({ loginSuccess, loginFailure }) => {
             cookiePolicy={"single_host_origin"}
           />
         </div>
+        {error && <Error error={error} />}
       </Grid>
     </Grid>
   );
