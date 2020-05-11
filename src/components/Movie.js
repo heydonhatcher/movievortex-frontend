@@ -9,14 +9,19 @@ import { API_URL } from "../constants";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
-    padding: 25,
+    minWidth: 400,
+    padding: 5,
+    display: "flex",
   },
   title: {
     fontSize: 18,
   },
+  secondTitle: {
+    fontSize: 14,
+  },
   media: {
-    height: 140,
+    height: 250,
+    width: 200,
   },
 });
 
@@ -25,21 +30,21 @@ const Movie = ({ movie }) => {
 
   return (
     <Card className={classes.root} variant="outlined">
+      <CardContent>
+        <Typography className={classes.title}>{movie.title}</Typography>
+        <Typography className={classes.title}>{movie.year}</Typography>
+        <Typography className={classes.secondTitle}>Director(s)</Typography>
+        <PersonList className="movie-directors" people={movie.directors} />
+        <Typography className={classes.secondTitle}>Writer(s)</Typography>
+        <PersonList className="movie-writers" people={movie.writers} />
+        <Typography className={classes.secondTitle}>Actor(s)</Typography>
+        <PersonList className="movie-actors" people={movie.actors} />
+      </CardContent>
       <CardMedia
         className={classes.media}
         image={API_URL + "/movies/poster/" + movie.tconst}
         title={movie.title}
       />
-      <CardContent>
-        <Typography className={classes.title}>{movie.title}</Typography>
-        <Typography className={classes.title}>{movie.year}</Typography>
-        <Typography>Director(s)</Typography>
-        <PersonList className="movie-directors" people={movie.directors} />
-        <Typography>Writer(s)</Typography>
-        <PersonList className="movie-writers" people={movie.writers} />
-        <Typography>Actor(s)</Typography>
-        <PersonList className="movie-actors" people={movie.actors} />
-      </CardContent>
     </Card>
   );
 };

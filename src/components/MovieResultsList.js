@@ -32,12 +32,6 @@ const MovieResultsList = ({ movieResults, selectMovie }) => {
   ));
 
   return (
-    // <div>
-    //   <Typography variant="h4" align="center" color="textSecondary">
-    //     Results:
-    //   </Typography>
-    //   {movieResultsList}
-    // </div>
     <React.Fragment>
       <CssBaseline />
       <main>
@@ -49,7 +43,7 @@ const MovieResultsList = ({ movieResults, selectMovie }) => {
         >
           Results:
         </Typography>
-        <Container className={classes.cardGrid} maxWidth="lrg">
+        <Container className={classes.cardGrid} maxWidth="lg">
           <Grid container spacing={4}>
             {movieResultsList}
           </Grid>
