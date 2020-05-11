@@ -156,6 +156,7 @@ export const movieResultClicked = (movie) => (dispatch) => {
       "Content-Type": "application/json",
     },
     mode: "cors",
+    credentials: "include",
   });
   const onSuccess = (data) => {
     dispatch(movieQueryFinished());
@@ -169,6 +170,7 @@ export const movieTitleSearchStarted = (title) => (dispatch) => {
   let url = API_URL + "/movies/find?title=" + title;
   const promise = fetch(url, {
     method: "GET",
+    credentials: "include",
   });
   const onSuccess = (data) => {
     dispatch(movieQueryFinished());
@@ -191,6 +193,7 @@ export const frontendLoginSuccess = (googleUser) => (dispatch) => {
       "Content-Type": "application/json",
     },
     mode: "cors",
+    credentials: "include",
   });
   const onSuccess = (data) => {
     let username = data.username;
