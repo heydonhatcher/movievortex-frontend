@@ -44,7 +44,16 @@ const MovieVortex = ({
   ) : (
     <MovieResultsList />
   );
-  const movieInput = selectedMovie ? <SelectedMovie /> : <MovieSearchInput />;
+  const movieInput = selectedMovie ? (
+    <SelectedMovie />
+  ) : (
+    <MovieSearchInput
+      logout={() => {
+        setUser(null);
+        Cookies.remove("user");
+      }}
+    />
+  );
 
   return (
     <div>

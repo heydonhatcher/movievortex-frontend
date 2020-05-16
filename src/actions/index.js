@@ -1,5 +1,4 @@
 import { createAction } from "@reduxjs/toolkit";
-import { API_URL } from "../constants";
 import Cookies from "js-cookie";
 import {
   ERROR_BACKEND_CONNECTION,
@@ -50,9 +49,10 @@ export const userNotLoggedIn = createAction("userNotLoggedIn", () => {
     error: true,
   };
 });
-export const userNotFound = createAction("userNotFound", () => {
+export const userNotFound = createAction("userNotFound", (userid) => {
   return {
     error: true,
+    payload: userid,
   };
 });
 
@@ -81,15 +81,11 @@ const handleBackendResponse = (promise, dispatch, onSuccess) => {
     )
     .then((data) => {
       if (data.error) {
-        switch (data.error) {
+        switch (data.error.type) {
           case ERROR_USER_NOT_LOGGED_IN:
-            throw {
-              type: ERROR_USER_NOT_LOGGED_IN,
-            };
+            throw data.error;
           case ERROR_USER_NOT_FOUND:
-            throw {
-              type: ERROR_USER_NOT_FOUND,
-            };
+            throw data.error;
           default:
             throw {
               type: ERROR_BACKEND_RESPONSE,
@@ -119,7 +115,7 @@ const handleBackendResponse = (promise, dispatch, onSuccess) => {
           dispatch(userNotLoggedIn());
           break;
         case ERROR_USER_NOT_FOUND:
-          dispatch(userNotFound());
+          dispatch(userNotFound(err.userid));
           break;
         default:
           dispatch(unknownError(err.err));
@@ -131,7 +127,7 @@ const handleBackendResponse = (promise, dispatch, onSuccess) => {
 export const movieResultClicked = (movie) => (dispatch) => {
   dispatch(newMovieSelected(movie));
   dispatch(movieQueryStarted());
-  let url = API_URL + "/movies/match";
+  let url = "/movies/match";
   console.log(url);
   let allPeople = new Set();
   movie.writers.forEach((writer) => {
@@ -154,6 +150,7 @@ export const movieResultClicked = (movie) => (dispatch) => {
     body: body,
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
     mode: "cors",
     credentials: "include",
@@ -167,10 +164,13 @@ export const movieResultClicked = (movie) => (dispatch) => {
 
 export const movieTitleSearchStarted = (title) => (dispatch) => {
   dispatch(movieQueryStarted());
-  let url = API_URL + "/movies/find?title=" + title;
+  let url = "/movies/find?title=" + title;
   const promise = fetch(url, {
     method: "GET",
     credentials: "include",
+    headers: {
+      Accept: "application/json",
+    },
   });
   const onSuccess = (data) => {
     dispatch(movieQueryFinished());
@@ -181,8 +181,7 @@ export const movieTitleSearchStarted = (title) => (dispatch) => {
 
 export const frontendLoginSuccess = (googleUser) => (dispatch) => {
   let token = googleUser.getAuthResponse().id_token;
-  console.log(token);
-  let url = API_URL + "/user/login";
+  let url = "/user/login";
   let body = JSON.stringify({
     token: token,
   });
@@ -191,6 +190,7 @@ export const frontendLoginSuccess = (googleUser) => (dispatch) => {
     body: body,
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
     mode: "cors",
     credentials: "include",

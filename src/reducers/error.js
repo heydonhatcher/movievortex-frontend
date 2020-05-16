@@ -10,7 +10,11 @@ import {
 
 export default createReducer(null, {
   [userNotFound]: (state, action) => {
-    return "The specified user does not have access. Please verify that you are an authorized account.";
+    return (
+      "The specified user with Google Id " +
+      action.payload +
+      " does not have access. Please verify that you are an authorized account."
+    );
   },
   [backendConnectionError]: (state, action) => {
     return "The system could not connect to the backend: " + action.payload;

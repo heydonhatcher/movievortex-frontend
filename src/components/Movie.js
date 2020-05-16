@@ -5,7 +5,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
-import { API_URL } from "../constants";
 
 const useStyles = makeStyles({
   root: {
@@ -42,7 +41,7 @@ const Movie = ({ movie }) => {
       </CardContent>
       <CardMedia
         className={classes.media}
-        image={API_URL + "/movies/poster/" + movie.tconst}
+        image={"/movies/poster/" + movie.tconst}
         title={movie.title}
       />
     </Card>

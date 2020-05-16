@@ -11,6 +11,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
+  title: {
+    flexGrow: 1,
+  },
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -21,9 +24,12 @@ const useStyles = makeStyles((theme) => ({
   heroButtons: {
     marginTop: theme.spacing(4),
   },
+  logout: {
+    flexGrow: 1,
+  },
 }));
 
-export default ({ title, onTitleChange, onTitleSubmit }) => {
+export default ({ title, onTitleChange, onTitleSubmit, logout }) => {
   const classes = useStyles();
 
   return (
@@ -32,9 +38,21 @@ export default ({ title, onTitleChange, onTitleSubmit }) => {
       <AppBar position="relative">
         <Toolbar>
           <TheatersIcon className={classes.icon} />
-          <Typography variant="h6" color="inherit" noWrap>
+          <Typography
+            className={classes.title}
+            variant="h6"
+            color="inherit"
+            noWrap
+          >
             Welcome to Movie Roulette
           </Typography>
+          <Button
+            className={classes.logout}
+            color="inherit"
+            onClick={() => logout()}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
 
