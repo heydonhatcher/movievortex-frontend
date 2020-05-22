@@ -1,4 +1,3 @@
-import React from "react";
 import { connect } from "react-redux";
 import { userChanged } from "../actions";
 import MovieVortex from "../components/MovieVortex";
