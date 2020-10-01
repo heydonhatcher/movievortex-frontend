@@ -50,7 +50,7 @@ export default ({ loginSuccess, loginFailure, error }) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in, loser!
+            Sign in!
           </Typography>
           <GoogleLogin
             clientId={GOOGLE_IDENTITY_CLIENT_ID}
