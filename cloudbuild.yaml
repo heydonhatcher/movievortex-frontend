@@ -10,3 +10,5 @@ steps:
       args: ['run', 'build']
     - name: 'gcr.io/cloud-builders/gcloud'
       args: [ 'compute', 'scp', '--recurse', '--zone=us-central1-a', '--project=igneous-future-259601', '/workspace/build', 'heyhatch@movieroulette-1:/tmp/frontend']
+    - name: 'gcr.io/cloud-builders/gcloud'
+      args: [ 'compute', 'ssh', 'heyhatch@movieroulette-1', '--command=rm -rf /home/heyhatch/frontend/*; mv /tmp/frontend/* /home/heyhatch/frontend/; rm -rf /tmp/frontend', '--zone=us-central1-a', '--project=igneous-future-259601']
